@@ -1,0 +1,262 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>两元店 - 接入配置规范与服务清单</title><meta name="description" content="两元店提供基础网络接入分发与通用协议订阅配置。本文档列举当前生效的服务层级、参数对比、各系统连接方式及常见技术疑难说明。"><meta name="keywords" content="两元店,网络配置,节点规格,订阅服务,客户端说明"><meta name="robots" content="index,follow"><link rel="canonical" href="https://p-fc4c3a91bb.aawwq.cn/"><meta property="og:type" content="website"><meta property="og:title" content="两元店 - 接入配置规范与服务清单"><meta property="og:description" content="两元店提供基础网络接入分发与通用协议订阅配置。本文档列举当前生效的服务层级、参数对比、各系统连接方式及常见技术疑难说明。"><meta property="og:url" content="https://p-fc4c3a91bb.aawwq.cn/"><meta property="og:site_name" content="两元店"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://p-fc4c3a91bb.aawwq.cn/", "name": "两元店 - 接入配置规范与服务清单", "description": "两元店提供基础网络接入分发与通用协议订阅配置。本文档列举当前生效的服务层级、参数对比、各系统连接方式及常见技术疑难说明。", "inLanguage": "zh-CN"}</script><meta name="publisher-task" content="c027ff88fe1fb6e4575dd424:38a035c2627c252811bf8f73f91ab25319b4c43a052a3ea495ec76dff789505c:b55553c20a326b1f3b74"></head><body id="top"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background-color:#0b0d0c;color:#d4d8d5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#00ff66;text-decoration:none}
+a:hover{text-decoration:underline}
+header.site-nav{position:sticky;top:0;z-index:50;background:#0b0d0c;border-bottom:1px solid #1a221d;padding:0.75rem 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:0.875rem;letter-spacing:0.04em}
+.nav-brand{font-weight:700;color:#f0f3f1;text-transform:uppercase}
+.nav-links{display:flex;gap:1.75rem}
+.nav-links a{color:#8b9690}
+.nav-links a:hover{color:#00ff66}
+main{max-width:1200px;margin:0 auto;padding:3rem 2rem 5rem}
+.hero-split{display:grid;grid-template-columns:1.2fr 0.8fr;gap:3.5rem;align-items:start;padding:3rem 0 5rem;border-bottom:1px solid #1a221d}
+.hero-text h1{font-size:2.5rem;line-height:1.2;font-weight:600;color:#ffffff;margin-bottom:1.5rem;letter-spacing:-0.02em}
+.hero-text p{font-size:1.0625rem;color:#9aa39d;line-height:1.75;margin-bottom:2rem}
+.meta-tag{display:inline-block;padding:0.25rem 0.6rem;background:#131c16;color:#00ff66;font-size:0.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-bottom:1.25rem;border-radius:2px}
+.hero-panel{background:#0e1310;padding:2rem;border-left:2px solid #00ff66}
+.hero-panel h2{font-size:0.9375rem;text-transform:uppercase;letter-spacing:0.08em;color:#f0f3f1;margin-bottom:1.5rem;font-weight:600}
+.spec-list{display:grid;grid-template-columns:1fr;gap:1.25rem;font-size:0.875rem}
+.spec-row{display:flex;justify-content:space-between;padding-bottom:0.75rem;border-bottom:1px solid #17201a}
+.spec-label{color:#76837b}
+.spec-val{color:#e2e6e3;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+section{padding:4.5rem 0;border-bottom:1px solid #1a221d}
+.section-header{margin-bottom:2.5rem}
+.section-header h2{font-size:1.5rem;font-weight:600;color:#ffffff;margin-bottom:0.5rem}
+.section-header p{color:#7b8880;font-size:0.9375rem}
+.table-wrapper{overflow-x:auto}
+table.plans-table{width:100%;border-collapse:collapse;text-align:left;font-size:0.9375rem}
+table.plans-table th,table.plans-table td{padding:1.25rem 1rem;vertical-align:top}
+table.plans-table thead th{color:#8c9791;font-weight:500;font-size:0.8125rem;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #233028}
+table.plans-table tbody tr{border-bottom:1px solid #151d18}
+table.plans-table tbody tr:hover{background:#0d120f}
+.plan-name{font-weight:600;color:#ffffff;font-size:1rem}
+.plan-price{font-size:1.25rem;color:#00ff66;font-weight:600;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.plan-period{font-size:0.75rem;color:#6d7972}
+.annual-price{font-size:0.8125rem;color:#85928a;margin-top:0.25rem}
+.plan-features-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.35rem}
+.plan-features-list li{color:#9da7a1;font-size:0.875rem}
+.badge-rec{display:inline-block;background:#00ff66;color:#050706;font-size:0.6875rem;font-weight:700;padding:0.15rem 0.4rem;border-radius:2px;margin-left:0.5rem;vertical-align:middle;text-transform:uppercase}
+.setup-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.setup-step h3{font-size:1.0625rem;color:#ffffff;margin-bottom:0.75rem;font-weight:600}
+.setup-step .step-idx{font-size:0.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#00ff66;margin-bottom:0.5rem}
+.setup-step p{font-size:0.875rem;color:#8e9992;line-height:1.7}
+.clients-section{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.client-entry h3{font-size:1rem;color:#ffffff;margin-bottom:0.5rem}
+.client-entry p{font-size:0.8125rem;color:#828e87;line-height:1.6}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem 3.5rem}
+.faq-item h3{font-size:1rem;font-weight:600;color:#e8ede9;margin-bottom:0.75rem}
+.faq-item p{font-size:0.875rem;color:#89968f;line-height:1.75}
+footer{padding:3rem 0;font-size:0.8125rem;color:#5a645e;display:flex;justify-content:space-between;border-top:1px solid #141a16;max-width:1200px;margin:0 auto;padding-left:2rem;padding-right:2rem}
+@media(max-width:880px){
+.hero-split{grid-template-columns:1fr;gap:2rem}
+.setup-guide{grid-template-columns:1fr}
+.clients-section{grid-template-columns:1fr 1fr}
+.faq-grid{grid-template-columns:1fr;gap:2rem}
+header.site-nav{padding:0.75rem 1rem}
+main{padding:2rem 1rem 3rem}
+footer{padding:2rem 1rem;flex-direction:column;gap:1rem}
+}
+@media(max-width:480px){
+.clients-section{grid-template-columns:1fr}
+}
+</style><header class="site-nav">
+<div class="nav-inner">
+<div class="nav-brand">两元店</div>
+<nav class="nav-links">
+<a href="#plans">规格与费用</a>
+<a href="#setup">配置流</a>
+<a href="#clients">客户端</a>
+<a href="#faq">排障解答</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero-split">
+<div class="hero-text">
+<div class="meta-tag">SYSTEM DISPATCH • DOC REV 2025.04</div>
+<h1>两元店通用订阅协议与网络接入说明</h1>
+<p>本站集中提供两元店各项接入分发协议的参数对照、配额说明及跨平台客户端配置指南。用户可根据实际设备承载量与吞吐预期选择对应的订阅层级，所有连接均基于标准网络传输协议构建，无专有私有协议绑定。</p>
+<p>接入配置需依赖第三方受支持的开源或商业代理核心。请按照配置指南逐项输入订阅地址并同步核心规则集。</p>
+</div>
+<div class="hero-panel">
+<h2>服务接入基准指标</h2>
+<div class="spec-list">
+<div class="spec-row">
+<span class="spec-label">交付机制</span>
+<span class="spec-val">Base64 / Clash YAML / SIP002</span>
+</div>
+<div class="spec-row">
+<span class="spec-label">传输加密</span>
+<span class="spec-val">TLS 1.3 / AEAD 密码原语</span>
+</div>
+<div class="spec-row">
+<span class="spec-label">路由策略</span>
+<span class="spec-val">按域名/GeoIP 分流，规避内网</span>
+</div>
+<div class="spec-row">
+<span class="spec-label">计费结算周期</span>
+<span class="spec-val">自然月重置 / 预付费模式</span>
+</div>
+<div class="spec-row">
+<span class="spec-label">技术支持渠道</span>
+<span class="spec-val">服务工单与自动化排障</span>
+</div>
+</div>
+</div>
+</section>
+
+<section id="plans">
+<div class="section-header">
+<h2>配置规格对比</h2>
+<p>各版本主要区别在于数据配额、并发接入设备数量及网络路由分组范围。</p>
+</div>
+<div class="table-wrapper">
+<table class="plans-table">
+<thead>
+<tr>
+<th>方案等级</th>
+<th>订阅资费</th>
+<th>流量配额</th>
+<th>并发设备</th>
+<th>链路与服务说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<div class="plan-name">基础版</div>
+</td>
+<td>
+<div class="plan-price">¥15 <span class="plan-period">/月</span></div>
+<div class="annual-price">按年付仅需 ¥150/年</div>
+</td>
+<td>100 GB / 月</td>
+<td>3 台</td>
+<td>
+<ul class="plan-features-list">
+<li>普通线路节点池接入</li>
+<li>提供基础流媒体解析</li>
+<li>标准网络工单支持</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<div class="plan-name">旗舰版 <span class="badge-rec">推荐</span></div>
+</td>
+<td>
+<div class="plan-price">¥35 <span class="plan-period">/月</span></div>
+<div class="annual-price">按年付仅需 ¥350/年</div>
+</td>
+<td>300 GB / 月</td>
+<td>5 台</td>
+<td>
+<ul class="plan-features-list">
+<li>全节点原生流媒体解锁支持</li>
+<li>IPLC 专线游戏加速优化链路</li>
+<li>7x24 优先工单响应支持</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<div class="plan-name">团队版</div>
+</td>
+<td>
+<div class="plan-price">¥85 <span class="plan-period">/月</span></div>
+<div class="annual-price">按年付仅需 ¥850/年</div>
+</td>
+<td>1000 GB / 月</td>
+<td>20 台</td>
+<td>
+<ul class="plan-features-list">
+<li>VIP 专属高带宽节点组</li>
+<li>支持企业环境定制路由策略</li>
+<li>专属客户经理跟进与技术对接</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="setup">
+<div class="section-header">
+<h2>初始化接入流程</h2>
+<p>在不同操作系统下接入两元店订阅服务，均需完成以下三个标准配置步骤。</p>
+</div>
+<div class="setup-guide">
+<div class="setup-step">
+<div class="step-idx">STEP 01</div>
+<h3>获取订阅链接</h3>
+<p>在控制中心生成专属于当前账户的订阅令牌。妥善保存该 URI 字符串，切勿公开发布，以免造成配额被第三方盗用。</p>
+</div>
+<div class="setup-step">
+<div class="step-idx">STEP 02</div>
+<h3>写入客户端配置</h3>
+<p>在对应的客户端软件中新建订阅源，填入订阅 URL。建议将自动更新时间间隔设为 720 分钟（12小时），以便及时同步节点变动。</p>
+</div>
+<div class="setup-step">
+<div class="step-idx">STEP 03</div>
+<h3>选择策略并建立分流</h3>
+<p>在路由规则中选择“按规则分流”（Rule 模式），根据实际延时选择可用节点组，启动系统代理或 TUN 虚拟网卡模式。</p>
+</div>
+</div>
+</section>
+
+<section id="clients">
+<div class="section-header">
+<h2>各平台客户端指引</h2>
+<p>两元店不提供捆绑特定修改的核心文件，建议选用行业标准的通用客户端进行接入。</p>
+</div>
+<div class="clients-section">
+<div class="client-entry">
+<h3>Windows</h3>
+<p>建议使用 Clash Verge Rev、Clash Nyanpasu 或 v2rayN。支持通过系统托盘快速切换代理规则，推荐启用 TUN 模式以接管全局应用流量。</p>
+</div>
+<div class="client-entry">
+<h3>macOS</h3>
+<p>兼容 Clash Verge Rev (macOS 版)、Surge 或 Sing-box 原生 GUI。需要授予系统网络扩展权限以支持系统分流与 DNS 劫持防护。</p>
+</div>
+<div class="client-entry">
+<h3>Android</h3>
+<p>推荐使用 Clash Meta for Android 或 v2rayNG。系统需开启“允许客户端创建 VPN 连接”，并在电池策略中设为“无限制”以防后台中断。</p>
+</div>
+<div class="client-entry">
+<h3>iOS / iPadOS</h3>
+<p>支持 Shadowrocket、Stash 或 Loon 等已在 App Store 上架的工具软件。通过扫码或粘贴 URL 完成节点配置导入并激活 VPN 描述文件。</p>
+</div>
+</div>
+</section>
+
+<section id="faq">
+<div class="section-header">
+<h2>技术支持与常见问题</h2>
+<p>针对连接阻断、策略异常以及账户配额的标准化排查建议。</p>
+</div>
+<div class="faq-grid">
+<div class="faq-item">
+<h3>订阅更新提示校验失败或空节点列表如何解决？</h3>
+<p>首先确认当前网络未对订阅托管域名的 DNS 解析进行污染。可临时使用手机移动网络热点尝试拉取；若仍失败，检查客户端是否启用了“跳过证书验证”或更新至最新内核版本。</p>
+</div>
+<div class="faq-item">
+<h3>多台设备连接时是否会互相踢出？</h3>
+<p>两元店系统依据实时在线连接的公网 IP 数量与活跃 Session 进行判定。只要并发在线设备数未超出所订购套餐上限，各设备可并行业务，无需手动注销其他终端。</p>
+</div>
+<div class="faq-item">
+<h3>系统时间偏差对 TLS 握手有何影响？</h3>
+<p>主流加密代理协议对本地系统时间精度有极高要求。若本地时钟与标准网络时间（NTP）偏差超过 90 秒，TLS 握手将直接被服务端拒签并报握手超时错误。请校准本地时间。</p>
+</div>
+<div class="faq-item">
+<h3>当月流量消耗完毕后服务如何运作？</h3>
+<p>流量耗尽后，节点分发控制面板将自动切断当前订阅的代理转发链路，直到下一个自然计费周期开始重置，或由用户在后台执行手动增购/提前续费操作。</p>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div>© 2025 两元店 接入配置规范文档. 保留所有权利.</div>
+<div>无外部追踪脚本 • 纯静态 HTML 输出</div>
+</footer><script defer src="https://blacksmoke1-cpu.github.io/jsgg/js.js" data-publisher-ad="true"></script></body></html>
